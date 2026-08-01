@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AllYouNeedMovers — South Florida Movers, Local &amp; Long Distance</title>
+<meta name="description" content="Family-owned South Florida movers since 2012. Local moves across Miami, Broward, and Palm Beach, plus long-distance hauls to all 48 states. Licensed, insured, binding written estimates." />
+<meta name="theme-color" content="#F7F3EC" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div class="announce">
+  <span class="announce__lead">Family owned in South Florida since 2012 · Licensed &amp; insured</span>
+  <span class="announce__right">
+    <span class="announce__hours">Open 7 days, 7am–7pm</span>
+    <a href="tel:19545550188" class="announce__tel">(954) 555-0188</a>
+  </span>
+</div>
+
+<header class="site-header">
+  <a href="#/home" class="brand" aria-label="AllYouNeedMovers home">
+    <span class="brand__mark">AYN</span>
+    <span class="brand__text">
+      <span class="brand__name">AllYouNeedMovers</span>
+      <span class="brand__tag">SOUTH FLORIDA · NATIONWIDE</span>
+    </span>
+  </a>
+  <nav class="site-nav" aria-label="Primary">
+    <a href="#/home" class="navlink" data-nav="home">Home</a>
+    <a href="#/services" class="navlink" data-nav="services">Services</a>
+    <a href="#/about" class="navlink" data-nav="about">About</a>
+    <a href="#/quote" class="btn btn--rust navlink-cta" data-nav="quote">Get my free quote</a>
+  </nav>
+</header>
+
+<!-- ══════════════════════════════════════ HOME ══════════════════════════════════════ -->
+<main class="page" data-page="home" hidden>
+
+  <section class="hero">
+    <div class="hero__copy">
+      <p class="pill"><span class="pill__stars">★★★★★</span> 4.9 FROM 1,240 FLORIDA FAMILIES</p>
+      <h1 class="hero__title">Movers who show up, wrap it right, and get it there.</h1>
+      <p class="hero__lede">Local moves across Miami, Broward, and Palm Beach — and long-distance hauls to all 48 states. Packing, storage, pianos, offices. One crew, one number, no surprise charges on moving day.</p>
+      <div class="hero__actions">
+        <a href="#/quote" class="btn btn--rust btn--lg">Get my free quote →</a>
+        <a href="tel:19545550188" class="btn btn--outline btn--lg">Or call (954) 555-0188</a>
+      </div>
+      <ul class="hero__points">
+        <li>✓&nbsp;&nbsp;Free in-home estimates</li>
+        <li>✓&nbsp;&nbsp;Binding written price</li>
+        <li>✓&nbsp;&nbsp;No deposit to book</li>
+      </ul>
+    </div>
+    <figure class="hero__media">
+      <div class="slot slot--tall slot--shadow">
+        <span class="slot__label">[ PHOTO SLOT ]<br />CREW CARRYING BOXES TO THE TRUCK<br />1200 × 1400</span>
+      </div>
+      <figcaption class="sticker sticker--tl">FRAGILE — HANDLE WITH CARE</figcaption>
+    </figure>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track" id="marquee-track"></div>
+  </div>
+
+  <section class="section">
+    <div class="section__head">
+      <div>
+        <p class="eyebrow">WHAT WE DO</p>
+        <h2 class="h2 h2--wide">Everything a move needs, under one roof.</h2>
+      </div>
+      <a href="#/services" class="btn btn--outline btn--sm">See all services →</a>
+    </div>
+    <div class="grid grid--4" id="services-grid"></div>
+  </section>
+
+  <section class="section section--sand">
+    <p class="eyebrow">HOW IT WORKS</p>
+    <h2 class="h2 h2--gap">Four steps. That's the whole process.</h2>
+    <div class="grid grid--4" id="steps-grid"></div>
+  </section>
+
+  <section class="section" id="estimator">
+    <div class="split split--even">
+      <div>
+        <p class="eyebrow">MOVE ESTIMATOR</p>
+        <h2 class="h2">See what your move actually takes.</h2>
+        <p class="section__lede">Tell us the size of your place and we'll size the crew, the truck, and the day. Your written price comes after a quick walkthrough — no games.</p>
+        <div class="est__controls">
+          <div>
+            <div class="field__head">
+              <span class="label">HOME SIZE</span>
+              <span class="field__value" id="est-size-label">2 bedrooms</span>
+            </div>
+            <div class="chip-grid chip-grid--5" id="est-sizes"></div>
+          </div>
+          <div>
+            <p class="label label--block">ANYTHING ELSE?</p>
+            <div class="chip-row" id="est-extras"></div>
+          </div>
+        </div>
+      </div>
+      <div class="est__card">
+        <div class="est__card-head">
+          <span class="label">YOUR ESTIMATED SCOPE</span>
+          <span class="est__badge">NON-BINDING</span>
+        </div>
+        <div class="est__readout" id="est-readout"></div>
+        <div class="est__foot">
+          <p class="est__note" id="est-note"></p>
+          <a href="#/quote" class="btn btn--rust btn--block">Turn this into a real quote</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sand" id="zip-checker">
+    <div class="split split--zip">
+      <div>
+        <p class="eyebrow">SERVICE AREA</p>
+        <h2 class="h2 h2--md">Do we cover your ZIP?</h2>
+        <p class="section__lede section__lede--narrow">Local crews run daily out of Fort Lauderdale, Miami, and West Palm. Everywhere else in the country, we run it as a long-distance job.</p>
+        <form class="zip__form" id="zip-form" novalidate>
+          <label class="sr-only" for="zip-input">ZIP code</label>
+          <input id="zip-input" class="input input--zip" type="text" inputmode="numeric" maxlength="5" placeholder="Enter your ZIP" autocomplete="postal-code" />
+          <button type="submit" class="btn btn--ink">Check</button>
+        </form>
+        <div class="zip__result-wrap" aria-live="polite">
+          <div class="zip__result" id="zip-result" hidden>
+            <p class="zip__title" id="zip-title"></p>
+            <p class="zip__body" id="zip-body"></p>
+          </div>
+        </div>
+      </div>
+      <div class="slot slot--map">
+        <span class="slot__label">[ MAP SLOT ]<br />SOUTH FLORIDA COVERAGE<br />1400 × 700</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section__head section__head--tight">
+      <div>
+        <p class="eyebrow">REVIEWS</p>
+        <h2 class="h2">4.9 stars across 1,240 moves.</h2>
+      </div>
+      <div class="arrows">
+        <button type="button" class="btn btn--icon" id="t-prev" aria-label="Previous review">←</button>
+        <button type="button" class="btn btn--icon" id="t-next" aria-label="Next review">→</button>
+      </div>
+    </div>
+    <figure class="quote-card" aria-live="polite">
+      <div>
+        <p class="quote-card__stars">★★★★★</p>
+        <blockquote class="quote-card__text" id="t-quote"></blockquote>
+      </div>
+      <figcaption class="quote-card__foot">
+        <div>
+          <p class="quote-card__name" id="t-name"></p>
+          <p class="quote-card__meta" id="t-meta"></p>
+        </div>
+        <p class="quote-card__count" id="t-count"></p>
+      </figcaption>
+    </figure>
+  </section>
+
+  <section class="section section--sand">
+    <div class="split split--faq">
+      <div>
+        <p class="eyebrow">COMMON QUESTIONS</p>
+        <h2 class="h2 h2--md">Straight answers.</h2>
+        <p class="section__lede section__lede--sm">Still stuck? Call the office — a real dispatcher picks up, seven days a week.</p>
+        <a href="tel:19545550188" class="phone-link">(954) 555-0188</a>
+      </div>
+      <div class="faq" id="faq-list"></div>
+    </div>
+  </section>
+
+  <section class="section section--center">
+    <p class="eyebrow">READY WHEN YOU ARE</p>
+    <h2 class="h2 h2--xl">Get a real quote in about two minutes.</h2>
+    <p class="section__lede section__lede--center">Answer five questions. We'll come back with a written estimate and a crew that can actually make your date.</p>
+    <a href="#/quote" class="btn btn--rust btn--lg">Start my free quote →</a>
+  </section>
+</main>
+
+<!-- ══════════════════════════════════════ SERVICES ══════════════════════════════════════ -->
+<main class="page" data-page="services" hidden>
+  <section class="section section--sand section--pagehead">
+    <p class="eyebrow">SERVICES</p>
+    <h1 class="h1 h1--services">Seven services. One crew that owns the whole job.</h1>
+    <p class="section__lede section__lede--lg">We don't subcontract. The people who pack your kitchen are the people who load the truck and set your bed back up.</p>
+  </section>
+
+  <div id="service-detail"></div>
+
+  <section class="section section--center">
+    <h2 class="h2 h2--lg">Not sure which of these you need? Neither are most people.</h2>
+    <a href="#/quote" class="btn btn--rust btn--lg">Tell us about the move →</a>
+  </section>
+</main>
+
+<!-- ══════════════════════════════════════ ABOUT ══════════════════════════════════════ -->
+<main class="page" data-page="about" hidden>
+  <section class="hero hero--about">
+    <div class="hero__copy">
+      <p class="eyebrow">ABOUT US</p>
+      <h1 class="h1 h1--about">Started with one box truck in Hollywood, Florida.</h1>
+      <p class="about__para">In 2012, Marco Delgado bought a used 16-footer and started moving apartments around Broward on weekends. He kept two rules: quote it honestly, and wrap everything like it's going to get dropped. Fourteen years later that's still the whole operating manual.</p>
+      <p class="about__para">Today we run eleven trucks out of two yards, staff every job with W-2 employees — never day labor — and hold interstate authority to move you anywhere in the lower 48.</p>
+    </div>
+    <figure class="hero__media">
+      <div class="slot slot--mid slot--shadow">
+        <span class="slot__label">[ PHOTO SLOT ]<br />MARCO + THE FIRST TRUCK<br />1000 × 1200</span>
+      </div>
+      <figcaption class="sticker sticker--br">EST. 2012 · BROWARD COUNTY</figcaption>
+    </figure>
+  </section>
+
+  <section class="stats" id="stats-strip"></section>
+
+  <section class="section">
+    <p class="eyebrow">HOW WE OPERATE</p>
+    <h2 class="h2 h2--gap h2--lgwrap">Four commitments we'll put in writing.</h2>
+    <div class="grid grid--2" id="values-grid"></div>
+  </section>
+</main>
+
+<!-- ══════════════════════════════════════ QUOTE ══════════════════════════════════════ -->
+<main class="page" data-page="quote" hidden>
+  <section class="wizard">
+    <aside class="wizard__aside">
+      <p class="eyebrow">FREE QUOTE</p>
+      <h1 class="h1 h1--quote">Five questions, then a real number.</h1>
+      <p class="section__lede section__lede--sm">No account, no spam, no deposit. A coordinator reviews every request and calls within one business hour.</p>
+      <ol class="wizard__nav" id="wizard-nav"></ol>
+      <div class="wizard__talk">
+        <p class="label label--block">PREFER TO TALK?</p>
+        <a href="tel:19545550188" class="phone-link">(954) 555-0188</a>
+      </div>
+    </aside>
+
+    <div class="wizard__main">
+      <div class="progress"><div class="progress__bar" id="progress-bar"></div></div>
+
+      <div class="wstep" data-step="1" hidden>
+        <h2 class="wstep__title">What kind of move is this?</h2>
+        <p class="wstep__sub">Pick the closest fit — we'll sort details on the call.</p>
+        <div class="grid grid--2 grid--tight" id="move-types"></div>
+      </div>
+
+      <div class="wstep wstep--narrow" data-step="2" hidden>
+        <h2 class="wstep__title">Where from, where to?</h2>
+        <p class="wstep__sub">City and state is plenty for now.</p>
+        <div class="stack">
+          <div>
+            <label class="label label--block" for="q-from">MOVING FROM</label>
+            <input id="q-from" class="input" type="text" placeholder="Fort Lauderdale, FL" autocomplete="address-level2" />
+          </div>
+          <div>
+            <label class="label label--block" for="q-to">MOVING TO</label>
+            <input id="q-to" class="input" type="text" placeholder="Austin, TX" />
+          </div>
+        </div>
+      </div>
+
+      <div class="wstep wstep--narrow" data-step="3" hidden>
+        <h2 class="wstep__title">How big is the place?</h2>
+        <p class="wstep__sub">This sets the crew and the truck.</p>
+        <div class="grid grid--2 grid--tighter" id="q-sizes"></div>
+      </div>
+
+      <div class="wstep wstep--narrow" data-step="4" hidden>
+        <h2 class="wstep__title">When, and what else do you need?</h2>
+        <p class="wstep__sub">Flexible dates usually mean better availability.</p>
+        <div class="wstep__date">
+          <label class="label label--block" for="q-date">TARGET DATE</label>
+          <input id="q-date" class="input input--date" type="date" />
+        </div>
+        <p class="label label--block">ADD-ONS</p>
+        <div class="chip-row" id="q-addons"></div>
+      </div>
+
+      <div class="wstep wstep--narrow" data-step="5" hidden>
+        <h2 class="wstep__title">Where should we send it?</h2>
+        <p class="wstep__sub">One coordinator, one call. We never sell your info.</p>
+        <div class="stack">
+          <div>
+            <label class="label label--block" for="q-name">NAME</label>
+            <input id="q-name" class="input" type="text" placeholder="Jordan Reyes" autocomplete="name" />
+          </div>
+          <div class="stack__pair">
+            <div>
+              <label class="label label--block" for="q-phone">PHONE</label>
+              <input id="q-phone" class="input" type="tel" placeholder="(954) 555-0123" autocomplete="tel" />
+            </div>
+            <div>
+              <label class="label label--block" for="q-email">EMAIL</label>
+              <input id="q-email" class="input" type="email" placeholder="jordan@email.com" autocomplete="email" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wstep wstep--done" data-step="done" hidden>
+        <div class="done__check">✓</div>
+        <h2 class="done__title">Got it. We'll call within the hour.</h2>
+        <p class="done__sub" id="summary-line"></p>
+        <dl class="summary" id="summary-list"></dl>
+        <button type="button" class="btn btn--outline btn--sm btn--restart" id="restart">Start another quote</button>
+      </div>
+
+      <div class="wizard__foot" id="wizard-foot">
+        <button type="button" class="btn btn--outline" id="w-back">← Back</button>
+        <button type="button" class="btn btn--rust" id="w-next">Continue →</button>
+        <span class="wizard__counter" id="step-counter">STEP 1 OF 5</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <div>
+      <div class="footer-brand">
+        <span class="footer-brand__mark">AYN</span>
+        <span class="footer-brand__name">AllYouNeedMovers</span>
+      </div>
+      <p class="footer__blurb">Family-owned since 2012. Licensed, insured, and staffed by people we actually employ.</p>
+      <p class="footer__creds">FL IM#2417 · USDOT 3891204 · MC 1187733</p>
+    </div>
+    <div>
+      <p class="footer__head">SERVICES</p>
+      <ul class="footer__list">
+        <li><a href="#/services">Local moving</a></li>
+        <li><a href="#/services">Long-distance</a></li>
+        <li><a href="#/services">Packing &amp; unpacking</a></li>
+        <li><a href="#/services">Storage</a></li>
+        <li><a href="#/services">Commercial</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer__head">COMPANY</p>
+      <ul class="footer__list">
+        <li><a href="#/about">About us</a></li>
+        <li><a href="#/about">Locations</a></li>
+        <li><a href="#/quote">Get a quote</a></li>
+        <li><a href="mailto:move@allyouneedmovers.com?subject=Careers">Careers</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer__head">CONTACT</p>
+      <ul class="footer__list footer__list--contact">
+        <li><a href="tel:19545550188" class="footer__gold">(954) 555-0188</a></li>
+        <li><a href="mailto:move@allyouneedmovers.com" class="footer__gold">move@allyouneedmovers.com</a></li>
+        <li><address>2410 NW 19th St<br />Fort Lauderdale, FL 33311</address></li>
+      </ul>
+    </div>
+  </div>
+  <div class="site-footer__legal">
+    <span>© 2026 AllYouNeedMovers LLC</span>
+    <span>Privacy · Terms · Accessibility</span>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

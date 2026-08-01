@@ -1,0 +1,25 @@
+node_modules/
+.next/
+out/
+build/
+dist/
+
+# Environment — never commit real keys
+.env
+.env.local
+.env*.local
+
+*.tsbuildinfo
+next-env.d.ts
+
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+.vercel
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Local agent/tooling permissions — machine-specific, not project config
+.claude/

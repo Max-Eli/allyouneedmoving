@@ -1,0 +1,17 @@
+{
+  "name": "AllYouNeedMovers",
+  "short_name": "AYN Movers",
+  "description": "South Florida movers — local, long-distance, packing, and storage.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F7F3EC",
+  "theme_color": "#F7F3EC",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
