@@ -11,6 +11,7 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "audit:claims": "node scripts/audit-claims.mjs",
+    "check:email": "node scripts/check-email.mjs",
     "check": "npm run typecheck && npm run lint && npm run build"
   },
   "dependencies": {

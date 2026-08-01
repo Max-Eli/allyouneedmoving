@@ -31,6 +31,7 @@ real provider.
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm run lint` | ESLint |
 | `npm run audit:claims` | List every unverified factual claim |
+| `npm run check:email` | Diagnose lead delivery config (add `-- --send` to send a real test) |
 | `npm run check` | typecheck + lint + build |
 
 ## Project layout
@@ -148,6 +149,23 @@ straight back to them.
 
 A 403 from Resend nearly always means the sending domain is not verified — the
 error logged server-side says so explicitly rather than leaving you to guess.
+
+**`LEAD_FROM_EMAIL` cannot be a Gmail address.** It is the *sender*, not the
+recipient. Resend only sends from domains you own and have verified, so
+`something@gmail.com` there is rejected every time. The destination
+(`LEAD_TO_EMAIL`) can of course be Gmail.
+
+To check a configuration before trusting it:
+
+```sh
+npm run check:email            # diagnose only
+npm run check:email -- --send  # also send a real test email
+```
+
+It reads `.env.local` if present, otherwise the ambient environment (pair it
+with `vercel env pull` to check what production actually has). It verifies the
+API key, confirms the sending domain is verified in Resend, and never prints
+the key.
 
 Adding a CRM means writing one function in `providers.ts` and a new case in
 `deliverLead`. No other file changes.
