@@ -117,9 +117,37 @@ form → server action → zod validation → spam checks → provider → offic
 
 | Value | Behaviour |
 | --- | --- |
-| `console` | Logs the lead. Development default. |
-| `resend` | Transactional email. Needs `RESEND_API_KEY`, `LEAD_FROM_EMAIL`, `LEAD_TO_EMAIL`, and a verified sending domain. |
+| `resend` | Transactional email. What this site uses. Needs `RESEND_API_KEY`. |
 | `formspree` | Forwards to an inbox. Needs `FORMSPREE_FORM_ID`. No domain setup. |
+| `console` | Logs the lead. Local development default. |
+
+All three forms deliver to `LEAD_TO_EMAIL`, which defaults to
+`outofstatemovers@gmail.com` in code if unset. Subject lines are prefixed with
+the site name so the source is obvious at a glance:
+
+```
+AllYouNeedMovers — New quote request — AYN-260801-6463
+AllYouNeedMovers — Website contact message — AYN-260801-1579
+AllYouNeedMovers — Job application — AYN-260801-1138
+```
+
+The customer's address is set as `Reply-To`, so replying from the inbox goes
+straight back to them.
+
+### Resend setup
+
+1. Create an account at [resend.com](https://resend.com) using the destination inbox.
+2. Create an API key, set `RESEND_API_KEY`, and set `LEAD_PROVIDER=resend`.
+3. Leave `LEAD_FROM_EMAIL` blank at first. The code falls back to Resend's shared
+   test sender (`onboarding@resend.dev`), which needs no DNS but **only delivers
+   to the address that owns the Resend account**. That is enough to prove the
+   wiring end to end.
+4. Before launch, verify a sending domain in Resend, complete its DNS records,
+   and set `LEAD_FROM_EMAIL` to an address on that domain. Until you do, mail to
+   any other inbox is rejected with a 403, and deliverability to Gmail is poor.
+
+A 403 from Resend nearly always means the sending domain is not verified — the
+error logged server-side says so explicitly rather than leaving you to guess.
 
 Adding a CRM means writing one function in `providers.ts` and a new case in
 `deliverLead`. No other file changes.

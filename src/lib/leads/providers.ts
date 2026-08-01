@@ -9,7 +9,28 @@ import { business } from '@/config/business'
  *   console  — logs the lead. Development default and the safe fallback.
  *   resend   — transactional email. Needs a verified sending domain.
  *   formspree — forwards to an inbox. No domain setup required.
+ *
+ * Every lead from every form — quote wizard, contact, careers — goes to the same
+ * inbox and carries the same subject prefix so it is obvious at a glance which
+ * site produced it.
  */
+
+/** Where leads land when LEAD_TO_EMAIL is not set in the environment. */
+const DEFAULT_LEAD_INBOX = 'outofstatemovers@gmail.com'
+
+function recipients(): string[] {
+  const configured = process.env.LEAD_TO_EMAIL?.trim()
+  const raw = configured && configured.length > 0 ? configured : DEFAULT_LEAD_INBOX
+  return raw
+    .split(',')
+    .map((address) => address.trim())
+    .filter(Boolean)
+}
+
+/** e.g. "AllYouNeedMovers — New quote request — AYN-260801-0493" */
+function subjectLine(payload: LeadPayload): string {
+  return `${business.name} — ${payload.kind} — ${payload.reference}`
+}
 
 export interface LeadPayload {
   /** Shown in the email subject, e.g. "New quote request". */
@@ -25,7 +46,7 @@ export type DeliveryResult = { ok: true } | { ok: false; error: string }
 
 function renderText(payload: LeadPayload): string {
   const lines = [
-    payload.kind,
+    `${business.name} — ${payload.kind}`,
     `Reference: ${payload.reference}`,
     `Received: ${new Date().toISOString()}`,
     '',
@@ -55,6 +76,7 @@ function renderHtml(payload: LeadPayload): string {
 
   return [
     `<div style="font-family:Arial,sans-serif;color:#1B1A17;max-width:640px">`,
+    `<p style="margin:0 0 6px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#B8431C;font-weight:bold">${escapeHtml(business.name)}</p>`,
     `<h1 style="font-size:20px;margin:0 0 4px">${escapeHtml(payload.kind)}</h1>`,
     `<p style="margin:0 0 20px;color:#6B675E;font-size:13px">Reference ${escapeHtml(payload.reference)}</p>`,
     `<table cellpadding="0" cellspacing="0" style="border-collapse:collapse;width:100%">${rows}</table>`,
@@ -63,13 +85,29 @@ function renderHtml(payload: LeadPayload): string {
   ].join('')
 }
 
+/**
+ * Resend's shared testing sender. Works with no DNS setup, but it will only
+ * deliver to the address that owns the Resend account — anything else is
+ * rejected. Fine for a first end-to-end test, not for production.
+ */
+const RESEND_TEST_SENDER = 'onboarding@resend.dev'
+
 async function deliverViaResend(payload: LeadPayload): Promise<DeliveryResult> {
   const apiKey = process.env.RESEND_API_KEY
-  const from = process.env.LEAD_FROM_EMAIL
-  const to = process.env.LEAD_TO_EMAIL
 
-  if (!apiKey || !from || !to) {
-    return { ok: false, error: 'Resend is selected but RESEND_API_KEY, LEAD_FROM_EMAIL, or LEAD_TO_EMAIL is missing.' }
+  if (!apiKey) {
+    return { ok: false, error: 'LEAD_PROVIDER=resend but RESEND_API_KEY is not set.' }
+  }
+
+  const configuredFrom = process.env.LEAD_FROM_EMAIL?.trim()
+  const from = configuredFrom && configuredFrom.length > 0 ? configuredFrom : RESEND_TEST_SENDER
+
+  if (from === RESEND_TEST_SENDER) {
+    console.warn(
+      `[leads] LEAD_FROM_EMAIL is not set, so sending from ${RESEND_TEST_SENDER}. ` +
+        'Resend will only deliver that to the address that owns the account. ' +
+        'Verify a sending domain and set LEAD_FROM_EMAIL before launch.',
+    )
   }
 
   try {
@@ -81,8 +119,8 @@ async function deliverViaResend(payload: LeadPayload): Promise<DeliveryResult> {
       },
       body: JSON.stringify({
         from: `${business.name} Website <${from}>`,
-        to: to.split(',').map((address) => address.trim()),
-        subject: `${payload.kind} — ${payload.reference}`,
+        to: recipients(),
+        subject: subjectLine(payload),
         text: renderText(payload),
         html: renderHtml(payload),
         ...(payload.replyTo ? { reply_to: payload.replyTo } : {}),
@@ -92,7 +130,18 @@ async function deliverViaResend(payload: LeadPayload): Promise<DeliveryResult> {
 
     if (!response.ok) {
       const detail = await response.text()
-      return { ok: false, error: `Resend responded ${response.status}: ${detail.slice(0, 300)}` }
+      // 403 here is almost always the unverified-domain case, which is easy to
+      // misread as a bad key. Say so explicitly in the log.
+      const hint =
+        response.status === 403 && from === RESEND_TEST_SENDER
+          ? ` — ${RESEND_TEST_SENDER} can only deliver to the Resend account owner's address. Verify a domain and set LEAD_FROM_EMAIL.`
+          : response.status === 403
+            ? ` — check that ${from} is on a domain verified in Resend.`
+            : ''
+      return {
+        ok: false,
+        error: `Resend responded ${response.status}: ${detail.slice(0, 300)}${hint}`,
+      }
     }
     return { ok: true }
   } catch (error) {
@@ -111,8 +160,12 @@ async function deliverViaFormspree(payload: LeadPayload): Promise<DeliveryResult
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify({
-        _subject: `${payload.kind} — ${payload.reference}`,
+        _subject: subjectLine(payload),
+        // Formspree forwards to the inbox registered against the form. Sending the
+        // intended recipient too makes the target explicit in the payload.
+        _to: recipients().join(','),
         ...(payload.replyTo ? { email: payload.replyTo } : {}),
+        site: business.name,
         reference: payload.reference,
         ...Object.fromEntries(payload.fields.map((field) => [field.label, field.value])),
       }),
@@ -132,6 +185,8 @@ async function deliverViaFormspree(payload: LeadPayload): Promise<DeliveryResult
 function deliverViaConsole(payload: LeadPayload): DeliveryResult {
   console.info(
     `\n──────────── LEAD (LEAD_PROVIDER=console, nothing was sent) ────────────\n` +
+      `Would email: ${recipients().join(', ')}\n` +
+      `Subject:     ${subjectLine(payload)}\n\n` +
       renderText(payload) +
       `\n────────────────────────────────────────────────────────────────────────\n`,
   )
