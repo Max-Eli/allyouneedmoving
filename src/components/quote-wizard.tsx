@@ -411,7 +411,7 @@ export function QuoteWizard() {
                   id="q-phone"
                   className="input"
                   type="tel"
-                  placeholder="(954) 555-0123"
+                  placeholder="(718) 555-0123"
                   autoComplete="tel"
                   value={phone}
                   aria-invalid={Boolean(errors.phone)}

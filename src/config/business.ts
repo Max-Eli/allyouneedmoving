@@ -23,9 +23,9 @@ export const business = {
   founderStory: 'Hollywood, Florida',
 
   phone: {
-    display: '(954) 555-0188',
-    e164: '+19545550188',
-    href: 'tel:+19545550188',
+    display: '(718) 757-5177',
+    e164: '+17187575177',
+    href: 'tel:+17187575177',
   },
 
   email: {
@@ -167,13 +167,6 @@ export const PLACEHOLDER_CLAIMS: PlaceholderClaim[] = [
     action: 'Replace with the true count of genuine reviews behind the aggregate.',
     risk: 'legal',
     why: 'Same FTC rule. The count must be substantiable if challenged.',
-  },
-  {
-    path: 'phone.e164',
-    currentValue: '+19545550188',
-    action: 'Replace with the real business line. 555-01XX is a reserved fictional range.',
-    risk: 'high',
-    why: 'The current number is unreachable, so every call-to-action on the site dead-ends.',
   },
   {
     path: 'address.street',
